@@ -15,11 +15,12 @@ class CreateProductWeightsTable extends Migration
     {
         Schema::create('product_weights', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('product_id');
+            $table->unsignedBigInteger('product_id');
             $table->integer('weight');
             $table->decimal('price');
             $table->integer('stock');
             $table->timestamps();
+            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 
