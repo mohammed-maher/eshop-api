@@ -9,11 +9,20 @@ class Product extends Model
 {
     use HasFactory;
 
-    public function tastes(){
+    protected $fillable = ['name'];
+
+    public function tastes()
+    {
         return $this->hasMany(ProductTastes::class);
     }
 
-    public function weights(){
+    public function weights()
+    {
         return $this->hasMany(ProductWeights::class);
+    }
+
+    public function getWeightsAttribute()
+    {
+        return $this->weights();
     }
 }

@@ -9,7 +9,10 @@ class ProductWeights extends Model
 {
     use HasFactory;
 
-    public function product(){
+    protected $fillable = ['weight', 'stock', 'price', 'product_id'];
+
+    public function product()
+    {
         return $this->belongsTo(Product::class);
     }
 }
