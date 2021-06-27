@@ -19,8 +19,8 @@ class ProductResource extends JsonResource
             'name' => $this->name,
             'created_at' => (string)$this->created_at,
             'updated_at' => (string)$this->updated_at,
-            'weights' => $request->weights,
-            'tastes' => $request->tastes
+            'weights' => $this->weights,
+            'tastes' => $this->tastes
         ];
     }
 }
