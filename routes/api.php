@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 /*
@@ -14,8 +14,14 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Auth Routes
+Route::group(['prefix'=>'auth'], function($router){
+    $router->post('/login', [AuthController::class, 'login']);
+    $router->post('/register', [AuthController::class, 'register']);
+    $router->post('/logout', [AuthController::class, 'logout']);
+    $router->post('/refresh', [AuthController::class, 'refresh']);
+    $router->get('/user', [AuthController::class, 'userProfile']);
 });
 
+// Product routes
 Route::apiResource('products', ProductController::class);
