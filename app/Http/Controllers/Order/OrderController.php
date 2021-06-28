@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\OrderProduct;
@@ -30,10 +31,11 @@ class OrderController extends Controller
         try{
             $orders=Order::query()
                 ->when($request->has('status'),function ($query) use($request){
-                   $query->where('status',OrderStatus::getStatusCode($request->status));
+                   $query->where('status',OrderStatus::getStatusCode($request->status)); //filter orders by status if status is passed in request
                 });
+            return new OrderCollection($orders->get());
         }catch (\Exception $e){
-
+            return response()->json(['error'=>'could not retrieve records'],422);
         }
     }
 
@@ -47,6 +49,7 @@ class OrderController extends Controller
     {
         try {
             DB::beginTransaction();
+            // create order
             $order = Order::create([
                 'user_id' => Auth::user()->id,
                 'status' => OrderStatus::STATUS_PENDING,
@@ -89,31 +92,9 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        return new OrderResource($order);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Order $order
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Order $order)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Order $order
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Order $order)
-    {
-        //
-    }
 
     public function deliver()
     {
