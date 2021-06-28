@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Order\OrderController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Product\ProductController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,7 +17,7 @@ use App\Http\Controllers\ProductController;
 */
 
 // Auth Routes
-Route::group(['prefix'=>'auth'], function($router){
+Route::group(['prefix' => 'auth'], function ($router) {
     $router->post('/login', [AuthController::class, 'login']);
     $router->post('/register', [AuthController::class, 'register']);
     $router->post('/logout', [AuthController::class, 'logout']);
@@ -25,3 +27,6 @@ Route::group(['prefix'=>'auth'], function($router){
 
 // Product routes
 Route::apiResource('products', ProductController::class);
+
+// Order routes
+Route::apiResource('orders', OrderController::class);
