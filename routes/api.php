@@ -29,4 +29,12 @@ Route::group(['prefix' => 'auth'], function ($router) {
 Route::apiResource('products', ProductController::class);
 
 // Order routes
-Route::apiResource('orders', OrderController::class);
+Route::apiResource('orders', OrderController::class)->only([
+    'store',
+    'index',
+    'show'
+]);
+Route::patch('orders/deliver/{id}',[OrderController::class,'deliverOrder']);
+Route::patch('orders/complete/{id}',[OrderController::class,'completeOrder']);
+Route::patch('orders/cancel/{id}',[OrderController::class,'cancelOrder']);
+
