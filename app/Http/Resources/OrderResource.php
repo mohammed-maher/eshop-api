@@ -20,6 +20,8 @@ class OrderResource extends JsonResource
             'user' => $this->user,
             'status' => OrderStatus::getStatus($this->status),
             'products' => new OrderProductResourceCollection($this->order_products),
+            'delivery_number' => $this->delivery_number,
+            'delivery_address'=>$this->delivery_address,
             'total' => $this->total,
             'is_preorder' => $this->is_preorder,
             'updated_at' => (string)$this->updated_at,

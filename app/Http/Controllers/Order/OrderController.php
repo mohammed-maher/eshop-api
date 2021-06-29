@@ -173,7 +173,9 @@ class OrderController extends Controller
     {
         try {
             $order = Order::findOrFail($orderId);
-            if ($order->status != OrderStatus::STATUS_DELIVERING) {
+            // both pending and delivering orders should be cancellable
+            if (!($order->status == OrderStatus::STATUS_DELIVERING ||
+                $order->status == OrderStatus::STATUS_PENDING)) {
                 throw new \Exception('invalid order status');
             }
             $order->status = OrderStatus::STATUS_CANCELLED;
@@ -183,7 +185,7 @@ class OrderController extends Controller
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'order not found'], 404);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'order could not be marked as completed'], 422);
+            return response()->json(['error' => 'order could not be marked as canceled'], 422);
         }
     }
 
@@ -208,6 +210,5 @@ class OrderController extends Controller
             return $oldStock - $orderQty;
         }
         return $oldStock + $orderQty;
-
     }
 }
