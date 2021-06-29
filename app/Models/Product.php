@@ -20,9 +20,4 @@ class Product extends Model
     {
         return $this->hasMany(ProductWeights::class);
     }
-
-    public function getWeightsAttribute()
-    {
-        return $this->weights();
-    }
 }

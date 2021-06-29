@@ -11,10 +11,14 @@ class OrderProduct extends Model
     protected $fillable = ['order_id','product_id','quantity','product_weight_id'];
 
     public function order(){
-        $this->belongsTo(Order::class);
+        return $this->belongsTo(Order::class);
     }
 
     public function product(){
-        $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class);
+    }
+
+    public function weight(){
+        return $this->belongsTo(ProductWeights::class,'product_weight_id','id');
     }
 }
