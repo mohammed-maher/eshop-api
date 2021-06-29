@@ -17,6 +17,7 @@ class OrderStatusTest extends TestCase
         $this->assertEquals(OrderStatus::getStatus(0),'PENDING');
         $this->assertEquals(OrderStatus::getStatus(1),'DELIVERING');
         $this->assertEquals(OrderStatus::getStatus(2),'COMPLETED');
+        $this->assertEquals(OrderStatus::getStatus(-1),'CANCELLED');
     }
 
     public function test_get_code_by_status()
@@ -24,5 +25,6 @@ class OrderStatusTest extends TestCase
         $this->assertEquals(OrderStatus::getStatusCode('pending'),0);
         $this->assertEquals(OrderStatus::getStatusCode('delivering'),1);
         $this->assertEquals(OrderStatus::getStatusCode('completed'),2);
+        $this->assertEquals(OrderStatus::getStatusCode('cancelled'),-1);
     }
 }
